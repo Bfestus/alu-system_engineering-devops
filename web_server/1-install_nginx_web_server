@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# this script will install nginx and give it some configurations
+apt-get update
+apt-get install -y nginx
+# the above code gets updates and tehn install nginx
+mkdir /etc/nginx/html
+touch /etc/nginx/html/index.html
+echo "Holberton School" > /etc/nginx/html/index.html
+echo "server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	root /etc/nginx/html;
+	index index.html index.htm;
+}
+" > /etc/nginx/sites-available/default
+service nginx restart
