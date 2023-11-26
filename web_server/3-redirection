@@ -1,20 +1,16 @@
 #!/usr/bin/env bash
-# this script will install nginx and give it some configurations
-apt-get update
-apt-get install -y nginx
-# the above code gets updates and tehn install nginx
-mkdir /etc/nginx/html
-touch /etc/nginx/html/index.html
-echo "Holberton School" > /etc/nginx/html/index.html
-echo "server {
-	listen 80;
-	listen [::]:80 default_server;
+#  A Script that configures a new Ubuntu machine to Perform a 301-redirection
 
-	root /etc/nginx/html;
-	index index.html index.htm;
-	location /redirect_me {
-		return 301 http://www.google.com/;
-	}
-}
-" > /etc/nginx/sites-available/default
-service nginx restart
+# Upadating Packages before Installations
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Creating an index.html page
+echo "Holberton School!" | sudo tee /var/www/html/index.html
+
+# Performing a 301 Redirection
+string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/gihozoinnocente permanent;"
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+
+# Restarting Nginx service
+sudo service nginx restart

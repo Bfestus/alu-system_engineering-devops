@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
-# this script will install nginx and give it some configurations
-apt-get update
-apt-get install -y nginx
-# the above code gets updates and tehn install nginx
-mkdir /etc/nginx/html
-touch /etc/nginx/html/index.html
-echo "Holberton School" > /etc/nginx/html/index.html
-echo "server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
+# Commands to install Nginx on Web-Sever-01
 
-	root /etc/nginx/html;
-	index index.html index.htm;
-}
-" > /etc/nginx/sites-available/default
-service nginx restart
+# Updating Packages before making Installations
+sudo apt-get update
+sudo apt-get -y install nginx
+
+# Configuring the Uncomplicated Firewall (UFW) to allow incoming traffic for the Nginx HTTP service
+sudo ufw allow 'Nginx HTTP'
+
+# Creating an index.html page
+echo "Holberton School" | sudo tee /var/www/html/index.html
+
+# Testing Nginx configurations for Syntax errors
+sudo nginx -t
+
+# Restarting Nginx
+sudo service nginx start
