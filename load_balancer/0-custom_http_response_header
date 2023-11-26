@@ -10,8 +10,14 @@ hostname=$(hostname)
 echo "add_header X-Served-By \$hostname;" | sudo tee -a /etc/nginx/nginx.conf
 
 # Restart Nginx to apply the changes
-sudo service nginx restart
+sudo systemctl restart nginx
 
 # Display a message indicating successful configuration
 echo "Nginx configured with custom HTTP response header on $hostname"
+
+# For testing on web-01
+curl -sI -H "Host: localhost" http://web-01 | grep X-Served-By
+
+# For testing on web-02
+curl -sI -H "Host: localhost" http://web-02 | grep X-Served-By
 
