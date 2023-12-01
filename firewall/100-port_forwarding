@@ -1,0 +1,22 @@
+# Clear existing ufw rules
+#Configure web-01 so that its firewall redirects port 8080/TCP to port 80/TCP
+sudo ufw --force reset
+
+# Set default policies
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow SSH (port 22)
+sudo ufw allow 22
+
+# Allow HTTP (port 80)
+sudo ufw allow 80
+
+# Allow port 8080
+sudo ufw allow 8080
+
+# Enable ufw
+sudo ufw enable
+
+# Set up port forwarding from 8080 to 80 using iptables
+sudo iptables -t nat -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
