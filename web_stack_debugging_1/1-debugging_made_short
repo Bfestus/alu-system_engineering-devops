@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# Changes port in Nginx
-service nginx stop
-sed -i 's/8080/80/g' /etc/nginx/sites-available/default
-service nginx start
-
+# This script fix the issue in sweet and short way
+sed -i "s/8080/80/g" /etc/nginx/sites-enabled/default
+service nginx restart
+sudo service nginx stop
