@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+#update list and install nginx
+apt-get update
+apt-get install -y nginx
+
+#ensure the nginx is running
+service nginx start
+
+#configure nginx to listen on port 80
+echo "server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name _;
+
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}" > /etc/nginx/sites-available/default
+
+#reload nginx for the changes to be applied
+service nginx reload
+
+#output the message
+echo "Nginx is now configured to listen on port 80"
