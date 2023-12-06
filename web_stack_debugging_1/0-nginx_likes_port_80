@@ -24,5 +24,9 @@ echo "server {
 #reload nginx for the changes to be applied
 service nginx reload
 
+# Output HTTP status code
+status_code=$(curl -s -o /dev/null -w "%{http_code}" 0:80)
+echo "HTTP status code: $status_code"
+
 #output the message
 echo "Nginx is now configured to listen on port 80"
